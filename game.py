@@ -4,7 +4,7 @@ from pygame import*
 font.init()
 
 font1 = font.Font(None, 72)
-font2 = font.Font(None, 72)
+font2 = font.Font(None, 36)
 win_width = 800
 win_height = 600
 left_bound = win_width / 40
@@ -21,6 +21,7 @@ img_file_bomb = 'bomb.png'
 img_file_door = 'door.png'
 img_wall = 'wall.png'
 img_key='key.png'
+
 FPS = 60
 
 C_WHITE = (255, 255, 255)
@@ -132,6 +133,8 @@ keys = sprite.Group()
 key=FinalSprite(img_key, 500,  130, 0)
 keys.add(key)
 all_sprites.add(key)
+count_keys = font2.render("Количество ключей: "+"0", 1, C_WHITE)
+window.blit(count_keys, (10, 10))
 robin = Hero(img_file_hero)
 all_sprites.add(robin)
 count_k=0
@@ -191,7 +194,7 @@ while run:
         if sprite.spritecollide(robin, keys, False):
             key.kill() # метод kill убирает спрайт из всех групп, в которых он числится
             count_k+=1
-            count_keys = font2.render("Количество ключей: "+str(count_k), 1, C_BLACK)
+            count_keys = font2.render("Количество ключей: "+str(count_k), 1, C_WHITE)
 
         if (
             robin.rect.x > right_bound and robin.x_speed > 0
@@ -209,6 +212,7 @@ while run:
         #Конец игры (Делает ---)
         local_shift = shift % win_width 
         window.blit(back, (local_shift, 0 )) 
+        window.blit(count_keys, (50, 50))
         if local_shift != 0:
             window.blit(back, (local_shift - win_width, 0 ))
         all_sprites.draw(window)
